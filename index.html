@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H&G Hawaii — Marketplace Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #152b1e;
+  --ocean: #0e2d3d;
+  --tide: #1d5c6b;
+  --sand: #c4a15a;
+  --sand-light: #f6efe0;
+  --cream: #faf8f3;
+  --leaf: #2e5e35;
+  --seafoam: #3d8f7c;
+  --mist: #eef3ef;
+  --text: #181f1a;
+  --muted: #607060;
+  --border: rgba(21,43,30,0.1);
+  --white: #ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;font-size:14px;}
+
+/* NAV */
+.nav{background:var(--forest);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,0.18);}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border:1.5px solid rgba(196,161,90,0.55);border-radius:7px;display:flex;align-items:center;justify-content:center;}
+.logo-mark svg{width:20px;height:20px;fill:var(--sand);}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--cream);letter-spacing:0.04em;}
+.logo-tagline{font-size:9px;color:rgba(196,161,90,0.65);letter-spacing:0.13em;text-transform:uppercase;margin-top:1px;}
+.nav-links{display:flex;gap:4px;align-items:center;}
+.nbtn{padding:8px 16px;border-radius:5px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all 0.15s;letter-spacing:0.01em;}
+.nbtn.ghost{background:transparent;color:rgba(255,255,255,0.62);}
+.nbtn.ghost:hover{color:white;background:rgba(255,255,255,0.08);}
+.nbtn.ghost.active{color:var(--sand);}
+.nbtn.cta{background:var(--sand);color:var(--forest);font-weight:600;}
+.nbtn.cta:hover{background:#cfa96a;}
+
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;animation:rise 0.22s ease;}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ══ LANDING ══ */
+.hero{background:var(--forest);padding:96px 2.5rem 104px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.018'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(196,161,90,0.35),transparent);}
+.hero-eyebrow{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--sand);margin-bottom:24px;opacity:0.85;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:62px;font-weight:500;color:var(--cream);line-height:1.08;margin-bottom:22px;letter-spacing:0.01em;position:relative;}
+.hero h1 em{font-style:italic;color:var(--sand);}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.58);max-width:500px;margin:0 auto 44px;line-height:1.75;font-weight:300;}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--sand);color:var(--forest);padding:14px 30px;border-radius:6px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;letter-spacing:0.02em;}
+.btn-primary:hover{background:#cfa96a;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:rgba(255,255,255,0.78);padding:14px 30px;border-radius:6px;font-size:14px;font-weight:400;border:1px solid rgba(255,255,255,0.22);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-outline:hover{border-color:rgba(255,255,255,0.55);color:white;}
+
+/* TRUST STRIP */
+.trust-strip{background:var(--white);border-bottom:1px solid var(--border);}
+.trust-inner{max-width:1100px;margin:0 auto;display:flex;align-items:stretch;justify-content:center;}
+.trust-item{display:flex;align-items:center;gap:13px;padding:22px 26px;border-right:1px solid var(--border);flex:1;justify-content:center;}
+.trust-item:last-child{border-right:none;}
+.trust-icon{width:36px;height:36px;border-radius:9px;background:var(--mist);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.trust-icon svg{width:17px;height:17px;fill:var(--leaf);}
+.trust-text-main{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;}
+.trust-text-sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+/* SECTIONS */
+.section{padding:72px 2.5rem;}
+.section.alt{background:var(--white);}
+.max{max-width:1060px;margin:0 auto;}
+.section-eyebrow{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--seafoam);margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500;color:var(--forest);margin-bottom:12px;line-height:1.12;}
+.section-sub{font-size:14.5px;color:var(--muted);margin-bottom:48px;line-height:1.7;max-width:540px;}
+
+/* FEATURE GRID */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:13px;overflow:hidden;}
+.feat-item{background:var(--white);padding:30px 26px;}
+.feat-icon{width:38px;height:38px;border-radius:9px;background:var(--mist);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.feat-icon svg{width:18px;height:18px;fill:var(--leaf);}
+.feat-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.feat-body{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* STATS */
+.stats-band{background:var(--ocean);padding:56px 2.5rem;}
+.stats-inner{max-width:840px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,0.09);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;color:var(--sand);line-height:1;}
+.stat-l{font-size:11.5px;color:rgba(255,255,255,0.48);margin-top:8px;line-height:1.5;}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+.steps::before{content:'';position:absolute;top:20px;left:10%;right:10%;height:1px;background:var(--border);}
+.step{text-align:center;padding:0 18px;position:relative;}
+.step-n{width:42px;height:42px;border-radius:50%;background:var(--forest);color:var(--sand);font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px solid var(--cream);position:relative;z-index:1;}
+.step h4{font-size:13.5px;font-weight:600;margin-bottom:9px;color:var(--text);}
+.step p{font-size:12.5px;color:var(--muted);line-height:1.65;}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:700px;}
+.price-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--white);}
+.price-card.featured{border-color:var(--sand);box-shadow:0 0 0 1px var(--sand);}
+.price-header{padding:26px 28px 22px;border-bottom:1px solid var(--border);}
+.price-badge{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:var(--sand);color:var(--forest);padding:3px 10px;border-radius:20px;margin-bottom:13px;}
+.price-badge.std{background:var(--mist);color:var(--muted);}
+.price-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--forest);}
+.price-rate{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:500;color:var(--forest);line-height:1;margin:9px 0 5px;}
+.price-rate span{font-size:16px;font-family:'Inter',sans-serif;font-weight:400;color:var(--muted);}
+.price-sub{font-size:12px;color:var(--muted);}
+.price-body{padding:22px 28px;}
+.price-feature{display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;font-size:13px;color:var(--text);}
+.price-check{width:17px;height:17px;border-radius:50%;background:var(--mist);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.price-check svg{width:10px;height:10px;fill:var(--leaf);}
+.price-scaling{background:var(--mist);border-radius:8px;padding:13px 15px;margin-top:18px;font-size:12px;color:var(--leaf);line-height:1.6;}
+
+/* WAITLIST */
+.waitlist-section{background:var(--sand-light);border-top:1px solid rgba(196,161,90,0.2);border-bottom:1px solid rgba(196,161,90,0.2);padding:72px 2.5rem;text-align:center;}
+.waitlist-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:30px;}
+.wl-input,.wl-select{padding:12px 16px;border:1px solid rgba(196,161,90,0.35);border-radius:7px;font-size:13.5px;font-family:'Inter',sans-serif;background:white;color:var(--text);outline:none;}
+.wl-input{min-width:240px;}
+.wl-input:focus,.wl-select:focus{border-color:var(--seafoam);box-shadow:0 0 0 3px rgba(61,143,124,0.1);}
+.btn-wl{background:var(--forest);color:white;padding:12px 26px;border-radius:7px;font-size:13.5px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-wl:hover{background:var(--leaf);}
+.wl-note{font-size:12px;color:var(--muted);margin-top:16px;}
+
+.footer{background:var(--forest);padding:32px 2.5rem;text-align:center;font-size:11.5px;color:rgba(255,255,255,0.3);line-height:1.9;}
+.footer a{color:rgba(196,161,90,0.6);text-decoration:none;}
+
+/* ══ MARKETPLACE ══ */
+.mkt-header{background:var(--white);border-bottom:1px solid var(--border);padding:22px 2.5rem;}
+.mkt-header h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--forest);}
+.mkt-header p{font-size:12.5px;color:var(--muted);margin-top:3px;}
+.mkt-body{display:grid;grid-template-columns:226px 1fr;}
+.sidebar{background:var(--white);border-right:1px solid var(--border);padding:22px;min-height:calc(100vh - 128px);}
+.sb-label{font-size:9.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin:0 0 9px;}
+.sb-section{margin-bottom:26px;}
+.ftag{display:block;padding:7px 11px;border-radius:5px;font-size:13px;cursor:pointer;color:var(--text);border:none;background:transparent;text-align:left;width:100%;font-family:'Inter',sans-serif;transition:all 0.12s;}
+.ftag:hover{background:var(--mist);}
+.ftag.active{background:var(--forest);color:var(--sand);font-weight:500;}
+.ftag .ct{float:right;font-size:11px;opacity:0.5;}
+
+.listings-area{padding:22px;background:var(--cream);}
+.search-row{display:flex;gap:10px;margin-bottom:18px;}
+.srch{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:13.5px;font-family:'Inter',sans-serif;background:var(--white);outline:none;color:var(--text);}
+.srch:focus{border-color:var(--seafoam);}
+.srt{padding:10px 13px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;background:var(--white);color:var(--text);outline:none;}
+.results-note{font-size:12px;color:var(--muted);margin-bottom:18px;}
+
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;}
+.pcard{background:var(--white);border:1px solid var(--border);border-radius:13px;overflow:hidden;cursor:pointer;transition:all 0.18s;}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(21,43,30,0.1);border-color:rgba(21,43,30,0.2);}
+.pcard-top{height:136px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:14px;position:relative;overflow:hidden;}
+.pcard-top.oc{background:linear-gradient(155deg,#0e2d3d 0%,#1d5c6b 100%);}
+.pcard-top.fr{background:linear-gradient(155deg,#152b1e 0%,#2e5e35 100%);}
+.pcard-top.sd{background:linear-gradient(155deg,#4a2c10 0%,#c4a15a 100%);}
+.pcard-top.tl{background:linear-gradient(155deg,#0d3040 0%,#3d8f7c 100%);}
+.pcard-species{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:rgba(255,255,255,0.12);position:absolute;bottom:6px;right:10px;letter-spacing:0.02em;pointer-events:none;white-space:nowrap;font-style:italic;}
+.pbadge{font-size:9.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:3px;color:white;position:absolute;top:11px;left:11px;}
+.pbadge.fresh{background:rgba(61,143,124,0.88);}
+.pbadge.ws{background:rgba(196,161,90,0.92);color:var(--forest);}
+.pbadge.low{background:rgba(180,80,30,0.88);}
+.pcard-body{padding:14px 15px;}
+.pname{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.pseller{font-size:11.5px;color:var(--muted);margin-bottom:11px;}
+.pseller span{color:var(--seafoam);font-weight:500;}
+.pfooter{display:flex;justify-content:space-between;align-items:center;}
+.pprice{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--forest);}
+.pprice .pu{font-size:11.5px;font-family:'Inter',sans-serif;font-weight:400;color:var(--muted);}
+.pstock{font-size:10.5px;color:var(--muted);margin-top:1px;}
+.btn-add{background:var(--forest);color:white;border:none;border-radius:5px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s;}
+.btn-add:hover{background:var(--leaf);}
+
+/* ══ DASHBOARD ══ */
+.dash-wrap{display:grid;grid-template-columns:216px 1fr;min-height:calc(100vh - 64px);}
+.dsb{background:var(--forest);}
+.dsb-user{padding:22px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px;}
+.dav{width:40px;height:40px;border-radius:50%;background:var(--sand);color:var(--forest);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;}
+.dun{font-size:14px;font-weight:600;color:white;}
+.dur{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(196,161,90,0.17);color:var(--sand);padding:3px 9px;border-radius:3px;margin-top:5px;}
+.dsec{font-size:9px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:rgba(255,255,255,0.22);padding:14px 18px 5px;}
+.dlink{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13px;font-weight:400;color:rgba(255,255,255,0.58);cursor:pointer;transition:all 0.12s;border:none;background:transparent;width:100%;text-align:left;font-family:'Inter',sans-serif;border-left:2px solid transparent;}
+.dlink:hover{color:white;background:rgba(255,255,255,0.05);}
+.dlink.active{color:var(--sand);background:rgba(196,161,90,0.1);border-left-color:var(--sand);}
+.dlink-icon{font-size:14px;width:18px;text-align:center;opacity:0.7;}
+
+.dmain{background:#f0f3f0;overflow-y:auto;}
+.dtop{background:var(--white);border-bottom:1px solid var(--border);padding:18px 26px;display:flex;justify-content:space-between;align-items:center;}
+.dtop h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--forest);}
+.dtop p{font-size:12px;color:var(--muted);margin-top:2px;}
+.dtop-btns{display:flex;gap:8px;}
+.btn-s{padding:8px 16px;border-radius:5px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:all 0.12s;}
+.btn-s.ol{background:var(--white);border:1px solid var(--border);color:var(--text);}
+.btn-s.ol:hover{border-color:var(--forest);}
+.btn-s.fl{background:var(--forest);color:white;}
+.btn-s.fl:hover{background:var(--leaf);}
+
+.dcontent{padding:24px;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px;}
+.mc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:17px 20px;}
+.mc-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.mc-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--forest);line-height:1.1;}
+.mc-change{font-size:11.5px;margin-top:4px;font-weight:500;}
+.mc-change.up{color:#267326;}
+.mc-change.nt{color:var(--muted);}
+
+.comply-bar{background:linear-gradient(135deg,#e8f3ea,#d8edd8);border:1px solid #9dcc9d;border-radius:9px;padding:14px 18px;display:flex;align-items:center;gap:13px;margin-bottom:20px;font-size:13px;color:#1a4022;}
+
+.dgrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.dcard{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.dcard-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.dcard-title{font-size:13.5px;font-weight:600;color:var(--text);}
+
+.orow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:11px 20px;border-bottom:1px solid var(--border);font-size:13px;}
+.orow:last-child{border-bottom:none;}
+.oid{font-weight:600;}
+.osub{font-size:10.5px;color:var(--muted);margin-top:1px;}
+
+.pill{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;}
+.pill.done{background:#e6f3e6;color:#267326;}
+.pill.proc{background:#e3eef7;color:#1a5491;}
+.pill.pend{background:#fef2e0;color:#b06010;}
+
+.chart-wrap{height:136px;margin:12px 18px;background:var(--cream);border-radius:6px;display:flex;align-items:flex-end;gap:5px;padding:12px;overflow:hidden;}
+.cbar{flex:1;border-radius:3px 3px 0 0;background:var(--forest);opacity:0.5;min-height:10px;transition:opacity 0.2s;}
+.cbar:hover{opacity:1;}
+.cbar.hi{background:var(--sand);opacity:0.82;}
+.chart-labels{padding:0 18px 12px;display:flex;justify-content:space-between;font-size:10px;color:var(--muted);}
+
+.inv-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:11px 20px;border-bottom:1px solid var(--border);font-size:13px;}
+.inv-row:last-child{border-bottom:none;}
+.inv-n{font-weight:500;}
+.inv-sub{font-size:10.5px;color:var(--muted);}
+.inv-stk{font-weight:600;font-size:12.5px;}
+.inv-stk.ok{color:#267326;}
+.inv-stk.low{color:#c06010;}
+.inv-pr{font-weight:600;color:var(--forest);}
+
+.dcard-full{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px;}
+.dtable{width:100%;border-collapse:collapse;font-size:12.5px;}
+.dtable th{text-align:left;padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:var(--cream);border-bottom:1px solid var(--border);}
+.dtable td{padding:13px 16px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable tr:hover td{background:var(--mist);}
+.la{display:flex;gap:5px;}
+.bxs{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+.bxs.e{background:var(--mist);color:var(--forest);}
+.bxs.d{background:#fde8e8;color:#8b1f1f;}
+.bxs.e:hover{background:#c5dac5;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--forest);color:white;padding:12px 20px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 6px 22px rgba(0,0,0,0.22);z-index:9999;opacity:0;transform:translateY(10px);transition:all 0.25s;pointer-events:none;max-width:320px;}
+.toast.show{opacity:1;transform:none;}
+
+/* PROTOTYPE BANNER */
+.proto-banner{background:var(--sand);padding:10px 2.5rem;text-align:center;font-size:12px;font-weight:600;color:var(--forest);letter-spacing:0.04em;}
+
+@media(max-width:900px){
+  .feat-grid{grid-template-columns:repeat(2,1fr);}
+  .hero h1{font-size:42px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:24px;}
+  .steps{grid-template-columns:repeat(2,1fr);}
+  .pricing-grid{grid-template-columns:1fr;}
+}
+@media(max-width:680px){
+  .mkt-body,.dash-wrap{grid-template-columns:1fr;}
+  .sidebar,.dsb{display:none;}
+  .metrics{grid-template-columns:repeat(2,1fr);}
+  .dgrid2{grid-template-columns:1fr;}
+  .trust-inner{flex-direction:column;}
+  .trust-item{border-right:none;border-bottom:1px solid var(--border);}
+  .hero h1{font-size:34px;}
+  .feat-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="proto-banner">H&amp;G Hawaii — Interactive Prototype · For Review by Jamie Iha &amp; Joan · Confidential</div>
+<div id="toast" class="toast"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo" onclick="go('landing')" style="text-decoration:none">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21h1.71l1-2h14l1 2h1.71C21.1 16.17 19 10 10 8h7zm-5 1.95c2.83 1.17 4.5 3.5 5.28 6.05H6.72c.78-2.55 2.45-4.88 5.28-6.05z"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">H&amp;G Hawaii</div>
+      <div class="logo-tagline">Hunter · Gatherer · Hawaii</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button class="nbtn ghost active" id="nl-landing" onclick="go('landing')">Home</button>
+    <button class="nbtn ghost" id="nl-marketplace" onclick="go('marketplace')">Marketplace</button>
+    <button class="nbtn ghost" id="nl-dashboard" onclick="go('dashboard')">Seller Dashboard</button>
+    <button class="nbtn cta" onclick="toast('Waitlist signup — coming soon!')">Join Waitlist</button>
+  </div>
+</nav>
+
+<!-- ════════════ LANDING ════════════ -->
+<div id="page-landing" class="page active">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Hawaiʻi's Local Harvest Marketplace</div>
+    <h1>From the <em>Land &amp; Sea</em><br>of Hawaiʻi</h1>
+    <p class="hero-sub">Connecting licensed local hunters, fishers, and gatherers with buyers across the islands — safely, simply, and with full aloha spirit.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="go('marketplace')">Browse the Market →</button>
+      <button class="btn-outline" onclick="go('dashboard')">View Seller Dashboard</button>
+    </div>
+  </div>
+
+  <div class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+        <div><div class="trust-text-main">Verified Local Sellers</div><div class="trust-text-sub">Licensed hunters &amp; fishers only</div></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
+        <div><div class="trust-text-main">Secure Payments</div><div class="trust-text-sub">Stripe-protected · No cash ever</div></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div><div class="trust-text-main">State-Aligned Platform</div><div class="trust-text-sub">Built with Hawaii DLNR in mind</div></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <div><div class="trust-text-main">Community First</div><div class="trust-text-sub">Built by &amp; for Hawaii locals</div></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
+        <div><div class="trust-text-main">Buyer Guarantee</div><div class="trust-text-sub">Every order protected &amp; insured</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="max">
+      <div class="section-eyebrow">What we offer</div>
+      <div class="section-title">Built for Hawaiʻi's Harvest Community</div>
+      <div class="section-sub">Everything licensed hunters, fishers, and gatherers need to sell confidently — and everything buyers need to purchase with trust.</div>
+      <div class="feat-grid">
+        <div class="feat-item">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
+          <div class="feat-title">Licensed Local Hunters &amp; Fishers</div>
+          <div class="feat-body">Every seller is verified with a current Hawaii hunting or fishing license before listing anything on the platform.</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+          <div class="feat-title">Complete Seller Back-Office</div>
+          <div class="feat-body">Invoicing, wholesale billing, and year-end tax summaries built right in. Run your harvest as a real business.</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="feat-title">Retail &amp; Wholesale Channels</div>
+          <div class="feat-body">Sell by the pound to individual buyers or fulfill bulk wholesale orders for restaurants, markets, and retailers.</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+          <div class="feat-title">Secure &amp; Legal — Always</div>
+          <div class="feat-body">Every transaction is protected by Stripe, every seller is licensed, and the platform is designed for full Hawaii regulatory alignment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-band">
+    <div class="stats-inner">
+      <div class="stat"><div class="stat-n">4.2%</div><div class="stat-l">Founder seller fee<br>first 50 members</div></div>
+      <div class="stat"><div class="stat-n">$0</div><div class="stat-l">Buyer fees<br>ever</div></div>
+      <div class="stat"><div class="stat-n">48hr</div><div class="stat-l">Seller payout<br>cycle via Stripe</div></div>
+      <div class="stat"><div class="stat-n">↓</div><div class="stat-l">Fees decrease<br>as platform grows</div></div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="max">
+      <div class="section-eyebrow">How it works</div>
+      <div class="section-title">Simple from first catch to payout</div>
+      <div class="section-sub" style="margin-bottom:56px">Four steps from sign-up to getting paid — no cash, no confusion.</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><h4>Get verified</h4><p>Submit your license. We review and activate your storefront within 48 hours.</p></div>
+        <div class="step"><div class="step-n">2</div><h4>List your catch</h4><p>Post fresh inventory with price and quantity. Inventory updates live automatically.</p></div>
+        <div class="step"><div class="step-n">3</div><h4>Buyers purchase online</h4><p>Secure checkout via Stripe. Buyers get instant confirmation, sellers get notified.</p></div>
+        <div class="step"><div class="step-n">4</div><h4>You get paid</h4><p>Funds released within 48 hours after fulfillment. Tax documents generated automatically.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="max">
+      <div class="section-eyebrow">Seller pricing</div>
+      <div class="section-title">Transparent. Fair. Community-first.</div>
+      <div class="section-sub">No hidden fees. Buyers always pay clean prices with zero added charges. As H&amp;G Hawaii grows, seller fees decrease — we grow together.</div>
+      <div class="pricing-grid">
+        <div class="price-card featured">
+          <div class="price-header">
+            <div class="price-badge">Founder · First 50 sellers</div>
+            <div class="price-name">Founder Member</div>
+            <div class="price-rate">4.2<span>% per sale</span></div>
+            <div class="price-sub">Locked permanently at this rate — forever.</div>
+          </div>
+          <div class="price-body">
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Lowest rate, locked for life</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Retail &amp; wholesale listings</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Full back-office &amp; tax reports</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>48-hour Stripe payouts</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Founding member badge &amp; recognition</div>
+            <div class="price-scaling">As the platform grows, seller fees will continue to decrease. We believe the platform should get more affordable as it gets more valuable.</div>
+          </div>
+        </div>
+        <div class="price-card">
+          <div class="price-header">
+            <div class="price-badge std">Standard</div>
+            <div class="price-name">Standard Member</div>
+            <div class="price-rate">7.5<span>% per sale</span></div>
+            <div class="price-sub">Drops as platform volume grows.</div>
+          </div>
+          <div class="price-body">
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Retail &amp; wholesale listings</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Full back-office &amp; tax reports</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>48-hour Stripe payouts</div>
+            <div class="price-feature"><div class="price-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Buyer fee: always $0</div>
+            <div class="price-scaling">Standard rates decrease over time as H&amp;G Hawaii scales. Every seller benefits as the community grows.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="waitlist-section">
+    <div class="max">
+      <div class="section-eyebrow" style="text-align:center">Join the waitlist</div>
+      <div class="section-title" style="text-align:center;margin-bottom:10px">Be one of the first 50 founders</div>
+      <p style="font-size:15px;color:var(--muted);text-align:center;max-width:460px;margin:0 auto">Founder members lock in 4.2% transaction fees permanently — before anyone else.</p>
+      <div class="waitlist-form">
+        <select class="wl-select"><option>I am a Seller</option><option>I am a Buyer</option><option>I am a Wholesaler</option></select>
+        <input class="wl-input" placeholder="Email address" type="email">
+        <input class="wl-input" placeholder="Phone (optional)" type="tel" style="min-width:180px">
+        <button class="btn-wl" onclick="toast('You\'re on the list! We\'ll reach out soon.')">Request Early Access</button>
+      </div>
+      <p class="wl-note">No spam. No fees to join. Founders who sign up before launch lock in the lowest rate — permanently.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2025 H&amp;G Hawaii · Hunter &amp; Gatherer Hawaii LLC · Honolulu, Hawaiʻi<br>
+    Founded by Jamie Iha · <a href="mailto:jamieiha1111@gmail.com">jamieiha1111@gmail.com</a> · 808.927.9050<br>
+    All payments secured by Stripe · Designed in partnership with Hawaii DLNR
+  </div>
+</div>
+
+<!-- ════════════ MARKETPLACE ════════════ -->
+<div id="page-marketplace" class="page">
+  <div class="mkt-header">
+    <h2>Browse Local Harvest</h2>
+    <p>Fresh from Hawaiʻi's waters, forests, and shorelines — updated daily by licensed sellers</p>
+  </div>
+  <div class="mkt-body">
+    <div class="sidebar">
+      <div class="sb-section">
+        <div class="sb-label">Category</div>
+        <button class="ftag active" onclick="sf(this)">All Products <span class="ct">24</span></button>
+        <button class="ftag" onclick="sf(this)">Fish &amp; Seafood <span class="ct">11</span></button>
+        <button class="ftag" onclick="sf(this)">Wild Game <span class="ct">6</span></button>
+        <button class="ftag" onclick="sf(this)">Shellfish <span class="ct">4</span></button>
+        <button class="ftag" onclick="sf(this)">Gathered <span class="ct">3</span></button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-label">Buyer Type</div>
+        <button class="ftag" onclick="sf(this)">Retail (individual)</button>
+        <button class="ftag" onclick="sf(this)">Wholesale (10+ lbs)</button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-label">Island</div>
+        <button class="ftag" onclick="sf(this)">Oʻahu</button>
+        <button class="ftag" onclick="sf(this)">Maui</button>
+        <button class="ftag" onclick="sf(this)">Big Island</button>
+        <button class="ftag" onclick="sf(this)">Kauaʻi</button>
+      </div>
+      <div class="sb-section">
+        <div class="sb-label">Availability</div>
+        <button class="ftag" onclick="sf(this)">In Stock Now</button>
+        <button class="ftag" onclick="sf(this)">Pre-Order</button>
+      </div>
+    </div>
+    <div class="listings-area">
+      <div class="search-row">
+        <input class="srch" placeholder="Search fish, game, or gatherers..." type="text">
+        <select class="srt"><option>Freshest first</option><option>Price: Low to high</option><option>Price: High to low</option></select>
+      </div>
+      <div class="results-note">24 listings · Updated today 6:14 AM HST · All sellers verified &amp; licensed</div>
+      <div class="product-grid">
+        <div class="pcard" onclick="toast('Viewing Yellowfin Ahi Tuna')">
+          <div class="pcard-top oc"><span class="pbadge fresh">Fresh Today</span><span class="pcard-species">Ahi</span></div>
+          <div class="pcard-body"><div class="pname">Yellowfin Ahi Tuna</div><div class="pseller">by <span>Kai Nakamura</span> · Oʻahu</div><div class="pfooter"><div><div class="pprice">$28<span class="pu">/lb</span></div><div class="pstock">14 lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Ahi Tuna added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Mahi Mahi')">
+          <div class="pcard-top oc"><span class="pbadge ws">Wholesale</span><span class="pcard-species">Mahi</span></div>
+          <div class="pcard-body"><div class="pname">Mahi Mahi (Dorado)</div><div class="pseller">by <span>Leilani Farms</span> · Maui</div><div class="pfooter"><div><div class="pprice">$18<span class="pu">/lb</span></div><div class="pstock">50+ lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Mahi Mahi added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Axis Deer')">
+          <div class="pcard-top fr"><span class="pbadge fresh">Fresh Today</span><span class="pcard-species">Deer</span></div>
+          <div class="pcard-body"><div class="pname">Axis Deer — Ground</div><div class="pseller">by <span>Maui Wildlands</span> · Maui</div><div class="pfooter"><div><div class="pprice">$16<span class="pu">/lb</span></div><div class="pstock">8 lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Axis Deer added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Opakapaka')">
+          <div class="pcard-top tl"><span class="pbadge low">Low Stock</span><span class="pcard-species">Opa</span></div>
+          <div class="pcard-body"><div class="pname">Opakapaka (Pink Snapper)</div><div class="pseller">by <span>Hilo Deep</span> · Big Island</div><div class="pfooter"><div><div class="pprice">$34<span class="pu">/lb</span></div><div class="pstock">3 lbs left</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Opakapaka added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Wild Boar')">
+          <div class="pcard-top fr"><span class="pbadge ws">Wholesale</span><span class="pcard-species">Boar</span></div>
+          <div class="pcard-body"><div class="pname">Wild Boar — Pork Cuts</div><div class="pseller">by <span>Puna Wild Harvest</span> · Big Island</div><div class="pfooter"><div><div class="pprice">$14<span class="pu">/lb</span></div><div class="pstock">40+ lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Wild Boar added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Ulua')">
+          <div class="pcard-top oc"><span class="pbadge fresh">Fresh Today</span><span class="pcard-species">Ulua</span></div>
+          <div class="pcard-body"><div class="pname">Ulua (Giant Trevally)</div><div class="pseller">by <span>Waimea Spear Co.</span> · Kauaʻi</div><div class="pfooter"><div><div class="pprice">$24<span class="pu">/lb</span></div><div class="pstock">6 lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Ulua added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Limu')">
+          <div class="pcard-top fr"><span class="pbadge fresh">Fresh Today</span><span class="pcard-species">Limu</span></div>
+          <div class="pcard-body"><div class="pname">Limu (Sea Lettuce)</div><div class="pseller">by <span>Hanalei Gather</span> · Kauaʻi</div><div class="pfooter"><div><div class="pprice">$12<span class="pu">/lb</span></div><div class="pstock">22 lbs available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Limu added to cart')">+ Cart</button></div></div>
+        </div>
+        <div class="pcard" onclick="toast('Viewing Kiawe Honey')">
+          <div class="pcard-top sd"><span class="pbadge ws">Wholesale</span><span class="pcard-species">Honey</span></div>
+          <div class="pcard-body"><div class="pname">Kiawe Honey — Raw</div><div class="pseller">by <span>Kohala Apiaries</span> · Big Island</div><div class="pfooter"><div><div class="pprice">$22<span class="pu">/jar</span></div><div class="pstock">36 jars available</div></div><button class="btn-add" onclick="event.stopPropagation();toast('Kiawe Honey added to cart')">+ Cart</button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ DASHBOARD ════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dash-wrap">
+    <div class="dsb">
+      <div class="dsb-user">
+        <div class="dav">KN</div>
+        <div class="dun">Kai Nakamura</div>
+        <div class="dur">Founder Seller</div>
+      </div>
+      <div class="dsec">Main</div>
+      <button class="dlink active" onclick="dv('overview',this)"><span class="dlink-icon">▦</span> Overview</button>
+      <button class="dlink" onclick="dv('listings',this)"><span class="dlink-icon">◈</span> My Listings</button>
+      <button class="dlink" onclick="dv('orders',this)"><span class="dlink-icon">◻</span> Orders</button>
+      <div class="dsec">Finance</div>
+      <button class="dlink" onclick="dv('invoices',this)"><span class="dlink-icon">◧</span> Invoices</button>
+      <button class="dlink" onclick="dv('payouts',this)"><span class="dlink-icon">$</span> Payouts</button>
+      <button class="dlink" onclick="dv('tax',this)"><span class="dlink-icon">≡</span> Tax Report</button>
+      <div class="dsec">Account</div>
+      <button class="dlink" onclick="toast('License &amp; compliance docs')"><span class="dlink-icon">✓</span> Compliance</button>
+      <button class="dlink" onclick="toast('Account settings')"><span class="dlink-icon">⚙</span> Settings</button>
+    </div>
+    <div class="dmain">
+
+      <div id="dv-overview" class="dv">
+        <div class="dtop"><div><h2>Overview</h2><p>Week of June 16–22, 2025 · Oʻahu</p></div><div class="dtop-btns"><button class="btn-s ol" onclick="toast('Downloading weekly PDF...')">Export PDF</button><button class="btn-s fl" onclick="dv('listings',document.querySelectorAll('.dlink')[1])">+ New Listing</button></div></div>
+        <div class="dcontent">
+          <div class="comply-bar"><span style="font-size:18px">✓</span><div><strong>Compliance verified</strong> — Your DLNR fishing license and seller certification are current. Next renewal: November 2025.</div></div>
+          <div class="metrics">
+            <div class="mc"><div class="mc-label">This Week Revenue</div><div class="mc-val">$1,847</div><div class="mc-change up">↑ 22% vs last week</div></div>
+            <div class="mc"><div class="mc-label">Orders Fulfilled</div><div class="mc-val">14</div><div class="mc-change up">↑ 4 from last week</div></div>
+            <div class="mc"><div class="mc-label">Lbs Sold</div><div class="mc-val">66</div><div class="mc-change up">↑ 12 lbs</div></div>
+            <div class="mc"><div class="mc-label">Platform Fee (4.2%)</div><div class="mc-val">$77</div><div class="mc-change nt">Founder rate · locked</div></div>
+          </div>
+          <div class="dgrid2">
+            <div class="dcard">
+              <div class="dcard-head"><div class="dcard-title">Recent Orders</div><button class="bxs e" onclick="dv('orders',document.querySelectorAll('.dlink')[2])">View all</button></div>
+              <div class="orow"><div><div class="oid">#ORD-1092</div><div class="osub">Ahi Tuna · 5 lbs · Retail</div></div><div style="font-weight:600">$140</div><div class="pill done">Fulfilled</div></div>
+              <div class="orow"><div><div class="oid">#ORD-1091</div><div class="osub">Ahi Tuna · 12 lbs · Wholesale</div></div><div style="font-weight:600">$336</div><div class="pill proc">Processing</div></div>
+              <div class="orow"><div><div class="oid">#ORD-1090</div><div class="osub">Opakapaka · 4 lbs · Retail</div></div><div style="font-weight:600">$136</div><div class="pill pend">Pending</div></div>
+              <div class="orow"><div><div class="oid">#ORD-1089</div><div class="osub">Ahi Tuna · 3 lbs · Retail</div></div><div style="font-weight:600">$84</div><div class="pill done">Fulfilled</div></div>
+            </div>
+            <div class="dcard">
+              <div class="dcard-head"><div class="dcard-title">Weekly Revenue</div><div style="font-size:11px;color:var(--muted)">Mon–Sun</div></div>
+              <div class="chart-wrap">
+                <div class="cbar" style="height:38%"></div><div class="cbar" style="height:55%"></div><div class="cbar" style="height:42%"></div><div class="cbar hi" style="height:78%"></div><div class="cbar" style="height:65%"></div><div class="cbar hi" style="height:92%"></div><div class="cbar" style="height:28%"></div>
+              </div>
+              <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            </div>
+          </div>
+          <div class="dcard">
+            <div class="dcard-head"><div class="dcard-title">Active Inventory</div><button class="bxs e" onclick="dv('listings',document.querySelectorAll('.dlink')[1])">Manage</button></div>
+            <div class="inv-row"><div><div class="inv-n">Yellowfin Ahi Tuna</div><div class="inv-sub">Listed · Retail &amp; Wholesale</div></div><div class="inv-stk ok">14 lbs</div><div class="inv-pr">$28/lb</div></div>
+            <div class="inv-row"><div><div class="inv-n">Opakapaka (Pink Snapper)</div><div class="inv-sub">Listed · Retail only</div></div><div class="inv-stk low">3 lbs ⚠</div><div class="inv-pr">$34/lb</div></div>
+            <div class="inv-row"><div><div class="inv-n">Octopus (Heʻe)</div><div class="inv-sub">Draft · Not listed</div></div><div class="inv-stk" style="color:var(--muted)">Draft</div><div class="inv-pr">$18/lb</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dv-listings" class="dv" style="display:none">
+        <div class="dtop"><div><h2>My Listings</h2></div><div class="dtop-btns"><button class="btn-s fl" onclick="toast('New listing form — Phase 2!')">+ New Listing</button></div></div>
+        <div class="dcontent">
+          <div class="dcard-full">
+            <table class="dtable">
+              <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Yellowfin Ahi Tuna</strong><br><span style="font-size:10.5px;color:var(--muted)">LST-0041</span></td><td>Fish &amp; Seafood</td><td>$28/lb</td><td><span style="color:#267326;font-weight:600">14 lbs</span></td><td>Retail + Wholesale</td><td><span class="pill done">Live</span></td><td><div class="la"><button class="bxs e" onclick="toast('Editing Ahi Tuna...')">Edit</button><button class="bxs d" onclick="toast('Pause listing?')">Pause</button></div></td></tr>
+                <tr><td><strong>Opakapaka (Pink Snapper)</strong><br><span style="font-size:10.5px;color:var(--muted)">LST-0038</span></td><td>Fish &amp; Seafood</td><td>$34/lb</td><td><span style="color:#c06010;font-weight:600">3 lbs ⚠</span></td><td>Retail only</td><td><span class="pill done">Live</span></td><td><div class="la"><button class="bxs e" onclick="toast('Editing Opakapaka...')">Edit</button><button class="bxs d" onclick="toast('Pause listing?')">Pause</button></div></td></tr>
+                <tr><td><strong>Octopus (Heʻe)</strong><br><span style="font-size:10.5px;color:var(--muted)">LST-0044</span></td><td>Fish &amp; Seafood</td><td>$18/lb</td><td><span style="color:var(--muted)">—</span></td><td>Retail only</td><td><span class="pill pend">Draft</span></td><td><div class="la"><button class="bxs e" onclick="toast('Editing draft...')">Edit</button><button class="bxs d" onclick="toast('Delete draft?')">Delete</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="dv-orders" class="dv" style="display:none">
+        <div class="dtop"><div><h2>Orders</h2></div><div class="dtop-btns"><button class="btn-s ol" onclick="toast('Exporting orders CSV...')">Export CSV</button></div></div>
+        <div class="dcontent">
+          <div class="dcard-full">
+            <table class="dtable">
+              <thead><tr><th>Order</th><th>Buyer</th><th>Product</th><th>Qty</th><th>Total</th><th>Type</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>#ORD-1092</strong><br><span style="font-size:10.5px;color:var(--muted)">Jun 21</span></td><td>Hina Kahanamoku<br><span style="font-size:10.5px;color:var(--muted)">Honolulu</span></td><td>Ahi Tuna</td><td>5 lbs</td><td><strong>$140</strong></td><td>Retail</td><td><span class="pill done">Fulfilled</span></td><td><button class="bxs e" onclick="toast('Invoice #ORD-1092')">Invoice</button></td></tr>
+                <tr><td><strong>#ORD-1091</strong><br><span style="font-size:10.5px;color:var(--muted)">Jun 20</span></td><td>Sunrise Fish Market<br><span style="font-size:10.5px;color:var(--muted)">Kailua</span></td><td>Ahi Tuna</td><td>12 lbs</td><td><strong>$336</strong></td><td><span style="color:var(--seafoam);font-weight:600">Wholesale</span></td><td><span class="pill proc">Processing</span></td><td><button class="bxs e" onclick="toast('Wholesale invoice...')">Invoice</button></td></tr>
+                <tr><td><strong>#ORD-1090</strong><br><span style="font-size:10.5px;color:var(--muted)">Jun 20</span></td><td>Lena Akana<br><span style="font-size:10.5px;color:var(--muted)">Mililani</span></td><td>Opakapaka</td><td>4 lbs</td><td><strong>$136</strong></td><td>Retail</td><td><span class="pill pend">Pending</span></td><td><button class="bxs e" onclick="toast('Viewing order...')">View</button></td></tr>
+                <tr><td><strong>#ORD-1089</strong><br><span style="font-size:10.5px;color:var(--muted)">Jun 19</span></td><td>Mark Ferreira<br><span style="font-size:10.5px;color:var(--muted)">Pearl City</span></td><td>Ahi Tuna</td><td>3 lbs</td><td><strong>$84</strong></td><td>Retail</td><td><span class="pill done">Fulfilled</span></td><td><button class="bxs e" onclick="toast('Invoice #ORD-1089')">Invoice</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="dv-invoices" class="dv" style="display:none">
+        <div class="dtop"><div><h2>Invoices</h2></div><div class="dtop-btns"><button class="btn-s ol" onclick="toast('Downloading all PDFs...')">Download All</button></div></div>
+        <div class="dcontent">
+          <div class="dcard-full">
+            <table class="dtable">
+              <thead><tr><th>Invoice</th><th>Buyer</th><th>Date</th><th>Products</th><th>Subtotal</th><th>H&amp;G Fee (4.2%)</th><th>Net Payout</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>INV-2025-0041</strong></td><td>Sunrise Fish Market</td><td>Jun 20</td><td>Ahi Tuna · 12 lbs</td><td>$336.00</td><td style="color:var(--muted)">−$14.11</td><td><strong style="color:var(--forest)">$321.89</strong></td><td><span class="pill proc">Pending</span></td><td><button class="bxs e" onclick="toast('Downloading PDF...')">PDF</button></td></tr>
+                <tr><td><strong>INV-2025-0040</strong></td><td>Hina Kahanamoku</td><td>Jun 21</td><td>Ahi Tuna · 5 lbs</td><td>$140.00</td><td style="color:var(--muted)">−$5.88</td><td><strong style="color:var(--forest)">$134.12</strong></td><td><span class="pill done">Paid</span></td><td><button class="bxs e" onclick="toast('Downloading PDF...')">PDF</button></td></tr>
+                <tr><td><strong>INV-2025-0039</strong></td><td>Mark Ferreira</td><td>Jun 19</td><td>Ahi Tuna · 3 lbs</td><td>$84.00</td><td style="color:var(--muted)">−$3.53</td><td><strong style="color:var(--forest)">$80.47</strong></td><td><span class="pill done">Paid</span></td><td><button class="bxs e" onclick="toast('Downloading PDF...')">PDF</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="dv-payouts" class="dv" style="display:none">
+        <div class="dtop"><div><h2>Payouts</h2><p>Powered by Stripe Connect</p></div></div>
+        <div class="dcontent">
+          <div class="comply-bar"><span style="font-size:16px">💳</span><div>All payouts sent directly to your verified bank account via <strong>Stripe Connect</strong>. No cash, no checks — ever. Standard 48-hour release after order fulfillment.</div></div>
+          <div class="metrics">
+            <div class="mc"><div class="mc-label">Available Balance</div><div class="mc-val">$456</div><div class="mc-change nt">Ready to pay out</div></div>
+            <div class="mc"><div class="mc-label">In Escrow</div><div class="mc-val">$322</div><div class="mc-change nt">Releasing in 24hrs</div></div>
+            <div class="mc"><div class="mc-label">Next Payout</div><div class="mc-val">Jun 24</div><div class="mc-change nt">Auto-scheduled</div></div>
+            <div class="mc"><div class="mc-label">YTD Paid Out</div><div class="mc-val">$11,420</div><div class="mc-change up">↑ Best year on track</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dv-tax" class="dv" style="display:none">
+        <div class="dtop"><div><h2>Year-End Tax Report</h2><p>2024 Summary</p></div><div class="dtop-btns"><button class="btn-s ol" onclick="toast('Downloading 2024 Tax PDF...')">Download 2024 PDF</button></div></div>
+        <div class="dcontent">
+          <div class="comply-bar"><span style="font-size:16px">📋</span><div>H&amp;G Hawaii automatically generates IRS-ready 1099-K summaries for all sellers with $600+ in annual gross sales. Platform fees are a deductible business expense.</div></div>
+          <div class="metrics">
+            <div class="mc"><div class="mc-label">2024 Gross Sales</div><div class="mc-val">$22,840</div><div class="mc-change nt">All transactions</div></div>
+            <div class="mc"><div class="mc-label">Platform Fees Paid</div><div class="mc-val">$959</div><div class="mc-change nt">Tax-deductible</div></div>
+            <div class="mc"><div class="mc-label">Net Earnings</div><div class="mc-val">$21,881</div><div class="mc-change up">↑ 34% year over year</div></div>
+            <div class="mc"><div class="mc-label">Total Orders</div><div class="mc-val">186</div><div class="mc-change nt">Across 12 months</div></div>
+          </div>
+          <div class="dcard-full">
+            <div class="dcard-head"><div class="dcard-title">Monthly Breakdown — 2024</div></div>
+            <table class="dtable">
+              <thead><tr><th>Month</th><th>Orders</th><th>Gross</th><th>Fee (4.2%)</th><th>Net</th></tr></thead>
+              <tbody>
+                <tr><td>January</td><td>12</td><td>$1,680</td><td>$70.56</td><td>$1,609.44</td></tr>
+                <tr><td>February</td><td>14</td><td>$1,960</td><td>$82.32</td><td>$1,877.68</td></tr>
+                <tr><td>March</td><td>18</td><td>$2,520</td><td>$105.84</td><td>$2,414.16</td></tr>
+                <tr><td>April</td><td>20</td><td>$2,800</td><td>$117.60</td><td>$2,682.40</td></tr>
+                <tr><td>May</td><td>16</td><td>$2,240</td><td>$94.08</td><td>$2,145.92</td></tr>
+                <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+                <tr><td>December</td><td>22</td><td>$3,080</td><td>$129.36</td><td>$2,950.64</td></tr>
+                <tr style="background:var(--mist)"><td><strong>Total 2024</strong></td><td><strong>186</strong></td><td><strong>$22,840</strong></td><td><strong>$959.28</strong></td><td><strong>$21,880.72</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function go(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nbtn.ghost').forEach(b=>b.classList.remove('active'));
+  var nb=document.getElementById('nl-'+name);
+  if(nb) nb.classList.add('active');
+  window.scrollTo(0,0);
+}
+function sf(el){
+  el.closest('.sidebar').querySelectorAll('.ftag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function dv(view,navEl){
+  document.querySelectorAll('.dv').forEach(v=>v.style.display='none');
+  var el=document.getElementById('dv-'+view);
+  if(el) el.style.display='block';
+  document.querySelectorAll('.dlink').forEach(i=>i.classList.remove('active'));
+  if(navEl) navEl.classList.add('active');
+}
+var tt;
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(tt);
+  tt=setTimeout(function(){t.classList.remove('show');},2600);
+}
+go('landing');
+</script>
+</body>
+</html>
